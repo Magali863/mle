@@ -1,0 +1,125 @@
+schema: '2.0'
+stages:
+  import:
+    cmd: python src/scripts/p_import_data.py
+    outs:
+    - path: data/raw/DF_2021_Raw.csv
+      hash: md5
+      md5: f1082b69d3bc561081c17a55a99177f2
+      size: 2947767
+    - path: data/raw/DF_2022_Raw.csv
+      hash: md5
+      md5: 1f981b345b7ea23acf086cfcadcffe2e
+      size: 3345476
+    - path: data/raw/DF_2023_Raw.csv
+      hash: md5
+      md5: 906e2a37000f0d31008aca08587ac200
+      size: 3552129
+    - path: logs/import.log
+      hash: md5
+      md5: 7af041fa36f431a48f6702882cfcc3fc
+      size: 1957
+  concatenate:
+    cmd: python src/scripts/p_concatenate_data.py
+    deps:
+    - path: data/raw/DF_2021_Raw.csv
+      hash: md5
+      md5: f1082b69d3bc561081c17a55a99177f2
+      size: 2947767
+    - path: data/raw/DF_2022_Raw.csv
+      hash: md5
+      md5: 1f981b345b7ea23acf086cfcadcffe2e
+      size: 3345476
+    - path: data/raw/DF_2023_Raw.csv
+      hash: md5
+      md5: 906e2a37000f0d31008aca08587ac200
+      size: 3552129
+    outs:
+    - path: data/processed/DF_2021-23_Concat_Raw.csv
+      hash: md5
+      md5: 58843b574866ff071d54680beff28ff7
+      size: 9845239
+    - path: logs/concatenate.log
+      hash: md5
+      md5: a28085d9e25ffad3f66b328e28ff96cf
+      size: 376
+  preprocess:
+    cmd: python src/scripts/p_preprocess_data.py
+    deps:
+    - path: data/processed/DF_2021-23_Concat_Raw.csv
+      hash: md5
+      md5: 58843b574866ff071d54680beff28ff7
+      size: 9845239
+    outs:
+    - path: data/processed/DF_2021-23_Processed.csv
+      hash: md5
+      md5: 9b04e3dd5b7384e7d9f82986bdd9e1bc
+      size: 41290506
+    - path: logs/preprocess.log
+      hash: md5
+      md5: ae8e04775e1e660f37b5e929ca5fe74e
+      size: 1570
+  split:
+    cmd: python src/scripts/p_split_data.py
+    deps:
+    - path: data/processed/DF_2021-23_Processed.csv
+      hash: md5
+      md5: 9b04e3dd5b7384e7d9f82986bdd9e1bc
+      size: 41290506
+    outs:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: d9d6dfa861fe8d57147b613eb7d8fd99
+      size: 7758255
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: ac5d67c0f7b5e761d354a26a85a5f50d
+      size: 31041347
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 83c3d1281d486bea7e46e7710e432aae
+      size: 142279
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 4726bd49444077766e88288991249c3e
+      size: 569095
+    - path: logs/split.log
+      hash: md5
+      md5: 9f9f8b0a59420e89eb344bf651f8a2cb
+      size: 1712
+  model:
+    cmd: python src/scripts/p_train_model.py
+    deps:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: d9d6dfa861fe8d57147b613eb7d8fd99
+      size: 7758255
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: ac5d67c0f7b5e761d354a26a85a5f50d
+      size: 31041347
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 83c3d1281d486bea7e46e7710e432aae
+      size: 142279
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 4726bd49444077766e88288991249c3e
+      size: 569095
+    outs:
+    - path: data/predictions.csv
+      hash: md5
+      md5: a8bbebb1e4f905e7ddf8d8982827ad82
+      size: 336344
+    - path: logs/train.log
+      hash: md5
+      md5: ae150feb8709bfaace93d2357e451fb8
+      size: 808
+    - path: metrics/scores.json
+      hash: md5
+      md5: 88c34233b4e4a9a76cd7b0a0e7497e0c
+      size: 66
+    - path: models/rf_model.pkl
+      hash: md5
+      md5: 12ad2d1550434ec9e186b56cfa70afd7
+      size: 233463089

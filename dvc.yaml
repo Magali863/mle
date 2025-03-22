@@ -43,4 +43,4 @@ stages:
       - models/rf_model.pkl
       - data/predictions.csv
       - metrics/scores.json
-      - logs/model.log
+      - logs/train.log

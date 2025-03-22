@@ -1,0 +1,4 @@
+2025-03-22 19:42:10,463 - INFO - Début de la concaténation
+2025-03-22 19:42:10,464 - INFO - Fichiers sélectionnés : data/raw/DF_2021_Raw.csv, data/raw/DF_2022_Raw.csv, data/raw/DF_2023_Raw.csv
+2025-03-22 19:42:10,693 - INFO - Concaténation réussie : 173898 lignes
+2025-03-22 19:42:11,212 - INFO - Dataset concaténé enregistré dans data\processed\DF_2021-23_Concat_Raw.csv
