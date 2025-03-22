@@ -55,7 +55,7 @@ def evaluate_model(model, X_test, y_test):
     logging.info(f"Évaluation : R² = {r2:.4f}, MSE = {mse:.4f}")
     return y_pred, {"r2": r2, "mse": mse}
 
-def save_outputs(model, y_pred, metrics):
+def save_outputs(model, y_test, y_pred, metrics):
     """Sauvegarde le modèle, les métriques et les prédictions."""
     output_dirs = {
         "models": Path("models"),
@@ -95,7 +95,7 @@ def main():
     y_pred, metrics = evaluate_model(rf, X_test, y_test)
     
     # Sauvegarder les résultats
-    save_outputs(rf, y_pred, metrics)
+    save_outputs(rf, y_test, y_pred, metrics)
     
     logging.info("Entraînement et évaluation terminés avec succès")
 
