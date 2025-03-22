@@ -1,0 +1,34 @@
+# Ignorer les fichiers de données bruts (gérés par DVC)
+*.csv
+*.pkl
+*.log
+
+# Ignorer les répertoires de données et modèles bruts
+data/*
+models/*
+logs/*
+metrics/*
+
+# Exceptions pour les fichiers suivis explicitement par DVC
+!data/raw/*.dvc
+!data/processed/*.dvc
+!data/predictions.csv.dvc
+!models/rf_model.pkl.dvc
+!metrics/scores.json.dvc
+!logs/*.dvc
+
+# Ignorer les fichiers temporaires et caches
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.ipynb_checkpoints
+*.dvc.lock
+
+# Ignorer les fichiers générés par l'environnement
+venv/
+envdvc/
+*.egg-info/
+dist/
+build/

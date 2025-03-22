@@ -2,3 +2,5 @@
     remote = remote_storage
 ['remote "remote_storage"']
     url = ../../dvc_remote
+['remote "origin"']
+    url = https://dagshub.com/Magali863/mle.dvc
