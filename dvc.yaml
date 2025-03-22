@@ -1,0 +1,41 @@
+stages:
+  import:
+    cmd: python src/scripts/p_import_data.py
+    outs:
+      - data/raw/DF_2021_Raw.csv
+      - data/raw/DF_2022_Raw.csv
+      - data/raw/DF_2023_Raw.csv
+  concatenate:
+    cmd: python src/scripts/p_concatenate_data.py
+    deps:
+      - data/raw/DF_2021_Raw.csv
+      - data/raw/DF_2022_Raw.csv
+      - data/raw/DF_2023_Raw.csv
+    outs:
+      - data/processed/DF_2021-23_Concat_Raw.csv
+  preprocess:
+    cmd: python src/scripts/p_preprocess_data.py
+    deps:
+      - data/processed/DF_2021-23_Concat_Raw.csv
+    outs:
+      - data/processed/DF_2021-23_Processed.csv
+  split:
+    cmd: python src/scripts/p_split_data.py
+    deps:
+      - data/processed/DF_2021-23_Processed.csv
+    outs:
+      - data/processed/X_train.csv
+      - data/processed/X_test.csv
+      - data/processed/y_train.csv
+      - data/processed/y_test.csv
+  model:
+    cmd: python src/scripts/p_train_model.py
+    deps:
+      - data/processed/X_train.csv
+      - data/processed/X_test.csv
+      - data/processed/y_train.csv
+      - data/processed/y_test.csv
+    outs:
+      - models/rf_model.pkl
+      - data/predictions.csv
+      - metrics/scores.json

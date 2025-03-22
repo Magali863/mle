@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 # Charger le dataset concaténé
-input_file = "data/raw/DF_2021-23_Concat_Raw.csv"
+input_file = "data/processed/DF_2021-23_Concat_Raw.csv"
 df = pd.read_csv(input_file, low_memory=False)
 
 # Vérification initiale
